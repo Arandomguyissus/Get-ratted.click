@@ -59,18 +59,18 @@
     </div>
 
     <script>
-        // Function to check login status
+        
         function checkLoginStatus() {
-            // Retrieve login status from localStorage
+           
             const loggedIn = localStorage.getItem('loggedIn') === 'true';
 
             if (loggedIn) {
-                // User is logged in, show the dashboard content and hide the login prompt
+               
                 document.getElementById('dashboardContent').classList.remove('hidden');
                 document.getElementById('loginPrompt').classList.add('hidden');
                 document.getElementById('logoutButton').classList.remove('hidden');
             } else {
-                // User is not logged in, show the login prompt and hide the dashboard content
+                
                 document.getElementById('dashboardContent').classList.add('hidden');
                 document.getElementById('loginPrompt').classList.remove('hidden');
                 document.getElementById('logoutButton').classList.add('hidden');
@@ -78,12 +78,12 @@
         }
 
         function logout() {
-            // Clear login status from localStorage and redirect to login page
+           
             localStorage.removeItem('loggedIn');
-            window.location.href = 'login.html'; // Redirect to login page after logout
+            window.location.href = 'login.html'; 
         }
 
-        // Ensure that checkLoginStatus is called after the DOM is fully loaded
+
         document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </body>
