@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+        }
+        input[type="text"], input[type="password"] {
+            font-size: 16px;
+            padding: 10px;
+            border: 2px solid rgba(106, 90, 205, 0.4);
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="button"] {
+            font-size: 16px;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 35px;
+            width: fit-content;
+            border-width: 2px;
+            border-style: solid;
+            border-color: rgba(106, 90, 205, 0.4);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 1);
+            padding-left: 15px;
+            padding-right: 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="center-text">Login</div>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <input type="button" value="Login" onclick="checkCredentials()">
+    </div>
+
+    <script>
+        // Base64 encoded credentials
+        const encodedUsername = 'YWRtaW4='; // Base64 for 'admin'
+        const encodedPassword = 'cGFzc3dvcmQ='; // Base64 for 'password'
+
+        function decodeBase64(encoded) {
+            return atob(encoded);
+        }
+
+        function checkCredentials() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === decodeBase64(encodedUsername) && password === decodeBase64(encodedPassword)) {
+                // Set a flag in localStorage to indicate user is logged in
+                localStorage.setItem('loggedIn', 'true');
+                // Redirect to dashboard page
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+    </script>
+</body>
+</html>
