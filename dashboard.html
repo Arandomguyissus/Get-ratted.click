@@ -17,9 +17,6 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        .hidden {
-            display: none;
-        }
         .login-prompt, .dashboard-content {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
@@ -28,6 +25,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        .hidden {
+            display: none;
         }
         a {
             color: rgba(106, 90, 205, 1);
@@ -50,7 +50,7 @@
         <!-- Add dashboard content here -->
     </div>
 
-    <div id="loginPrompt" class="login-prompt">
+    <div id="loginPrompt" class="login-prompt hidden">
         <h1>Please Login</h1>
         <a href="login.html">Go to Login Page</a>
     </div>
@@ -58,19 +58,22 @@
     <script>
         // Function to check login status
         function checkLoginStatus() {
-            if (localStorage.getItem('loggedIn') === 'true') {
-                // Show the dashboard content and hide the login prompt
+            // Retrieve login status from localStorage
+            const loggedIn = localStorage.getItem('loggedIn') === 'true';
+
+            if (loggedIn) {
+                // User is logged in, show the dashboard content and hide the login prompt
                 document.getElementById('dashboardContent').classList.remove('hidden');
                 document.getElementById('loginPrompt').classList.add('hidden');
             } else {
-                // Show the login prompt and hide the dashboard content
+                // User is not logged in, show the login prompt and hide the dashboard content
                 document.getElementById('dashboardContent').classList.add('hidden');
                 document.getElementById('loginPrompt').classList.remove('hidden');
             }
         }
 
-        // Call the function to check login status on page load
-        checkLoginStatus();
+        // Ensure that checkLoginStatus is called after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </body>
 </html>
