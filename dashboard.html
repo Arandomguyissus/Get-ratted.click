@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -15,8 +15,9 @@
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
-        .login-container {
+        .login-prompt, .dashboard-content {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 8px;
@@ -24,75 +25,66 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 300px;
-        }
-        input[type="text"], input[type="password"] {
-            font-size: 16px;
-            padding: 10px;
-            border: 2px solid rgba(106, 90, 205, 0.4);
-            border-radius: 4px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        input[type="button"] {
-            font-size: 16px;
-            background-color: rgba(0, 0, 0, 0.5);
-            height: 35px;
-            width: fit-content;
-            border-width: 2px;
-            border-style: solid;
-            border-color: rgba(106, 90, 205, 0.4);
-            border-radius: 4px;
-            color: rgba(255, 255, 255, 1);
-            padding-left: 15px;
-            padding-right: 15px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: border-color 0.5s ease;
         }
         .hidden {
             display: none;
         }
+        a, button {
+            color: rgba(106, 90, 205, 1);
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid rgba(106, 90, 205, 0.4);
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+        a:hover, button:hover {
+            background-color: rgba(106, 90, 205, 0.1);
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="center-text">Login</div>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <input type="button" value="Login" onclick="checkCredentials()">
+    <div id="dashboardContent" class="dashboard-content hidden">
+        <h1>Welcome to the Dashboard</h1>
+        <!-- Add dashboard content here -->
+        <button id="logoutButton" class="hidden" onclick="logout()">Logout</button>
     </div>
-    <div id="errorMessage" class="hidden" style="color: red; margin-top: 10px;">
-        Invalid username or password
+
+    <div id="loginPrompt" class="login-prompt hidden">
+        <h1>Please Login</h1>
+        <a href="login.html">Go to Login Page</a>
     </div>
 
     <script>
-        // Base64 encoded credentials
-        const encodedUsername = 'YWRtaW4='; // Base64 for 'admin'
-        const encodedPassword = 'UmVkNTY3NzMwXw=='; // Base64 for 'Red567730_'
+        // Function to check login status
+        function checkLoginStatus() {
+            // Retrieve login status from localStorage
+            const loggedIn = localStorage.getItem('loggedIn') === 'true';
 
-        function decodeBase64(encoded) {
-            return atob(encoded);
-        }
-
-        function checkCredentials() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === decodeBase64(encodedUsername) && password === decodeBase64(encodedPassword)) {
-                // Set login status and redirect to dashboard
-                localStorage.setItem('loggedIn', 'true');
-                window.location.href = 'dashboard.html';
+            if (loggedIn) {
+                // User is logged in, show the dashboard content and hide the login prompt
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                document.getElementById('loginPrompt').classList.add('hidden');
+                document.getElementById('logoutButton').classList.remove('hidden');
             } else {
-                // Show error message if credentials are invalid
-                document.getElementById('errorMessage').classList.remove('hidden');
+                // User is not logged in, show the login prompt and hide the dashboard content
+                document.getElementById('dashboardContent').classList.add('hidden');
+                document.getElementById('loginPrompt').classList.remove('hidden');
+                document.getElementById('logoutButton').classList.add('hidden');
             }
         }
+
+        function logout() {
+            // Clear login status from localStorage and redirect to login page
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html'; // Redirect to login page after logout
+        }
+
+        // Ensure that checkLoginStatus is called after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </body>
 </html>
