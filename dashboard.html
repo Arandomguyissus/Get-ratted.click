@@ -20,7 +20,7 @@
         .hidden {
             display: none;
         }
-        .login-prompt {
+        .login-prompt, .dashboard-content {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 8px;
@@ -45,27 +45,32 @@
     </style>
 </head>
 <body>
-    <div id="content" class="hidden">
+    <div id="dashboardContent" class="dashboard-content hidden">
         <h1>Welcome to the Dashboard</h1>
         <!-- Add dashboard content here -->
     </div>
 
-    <div id="loginPrompt" class="login-prompt">
+    <div id="loginPrompt" class="login-prompt hidden">
         <h1>Please Login</h1>
         <a href="login.html">Go to Login Page</a>
     </div>
 
     <script>
-        // Check if the user is logged in
-        if (localStorage.getItem('loggedIn') === 'true') {
-            // Show the dashboard content and hide the login prompt
-            document.getElementById('content').classList.remove('hidden');
-            document.getElementById('loginPrompt').classList.add('hidden');
-        } else {
-            // Show the login prompt and hide the dashboard content
-            document.getElementById('content').classList.add('hidden');
-            document.getElementById('loginPrompt').classList.remove('hidden');
+        // Function to check login status
+        function checkLoginStatus() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                // Show the dashboard content and hide the login prompt
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                document.getElementById('loginPrompt').classList.add('hidden');
+            } else {
+                // Show the login prompt and hide the dashboard content
+                document.getElementById('dashboardContent').classList.add('hidden');
+                document.getElementById('loginPrompt').classList.remove('hidden');
+            }
         }
+
+        // Call the function to check login status
+        checkLoginStatus();
     </script>
 </body>
 </html>
