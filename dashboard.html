@@ -29,7 +29,7 @@
         .hidden {
             display: none;
         }
-        a {
+        a, button {
             color: rgba(106, 90, 205, 1);
             text-decoration: none;
             font-size: 16px;
@@ -38,8 +38,10 @@
             padding: 10px;
             border-radius: 4px;
             transition: background-color 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
-        a:hover {
+        a:hover, button:hover {
             background-color: rgba(106, 90, 205, 0.1);
         }
     </style>
@@ -48,6 +50,7 @@
     <div id="dashboardContent" class="dashboard-content hidden">
         <h1>Welcome to the Dashboard</h1>
         <!-- Add dashboard content here -->
+        <button id="logoutButton" class="hidden" onclick="logout()">Logout</button>
     </div>
 
     <div id="loginPrompt" class="login-prompt hidden">
@@ -65,11 +68,19 @@
                 // User is logged in, show the dashboard content and hide the login prompt
                 document.getElementById('dashboardContent').classList.remove('hidden');
                 document.getElementById('loginPrompt').classList.add('hidden');
+                document.getElementById('logoutButton').classList.remove('hidden');
             } else {
                 // User is not logged in, show the login prompt and hide the dashboard content
                 document.getElementById('dashboardContent').classList.add('hidden');
                 document.getElementById('loginPrompt').classList.remove('hidden');
+                document.getElementById('logoutButton').classList.add('hidden');
             }
+        }
+
+        function logout() {
+            // Clear login status from localStorage and redirect to login page
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html'; // Redirect to login page after logout
         }
 
         // Ensure that checkLoginStatus is called after the DOM is fully loaded
